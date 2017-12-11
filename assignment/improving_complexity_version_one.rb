@@ -1,45 +1,28 @@
 # This method takes n arrays as input and combine them in sorted ascending  order
  def poorly_written_ruby(*arrays)
+   combined_array = []
+   arrays.each do |array|
+       combined_array += array # eliminate a sub-loop
+   end
 
-	 # perform a merge sort
-	# if the array is 1 item long, consider it sorted and exit  
-    if array.count <= 1
-        return array
-    end
+   sorted_array = [combined_array.delete_at(0)]
 
-    mid = array.count / 2
-    left = mergesort array.slice(0, mid)
-    right = mergesort array.slice(mid, array.count - mid)
+   for val in combined_array # for each value in combined_array
+     i = 0 # initialize i to 0
+     while i < sorted_array.length 
+       if val <= sorted_array[i] # if the current value in c_a <= s_a[i]
+         sorted_array.insert(i, val) # insert value before current value
+         break
+       elsif i == sorted_array.length - 1 # if we're at the end of the array
+         sorted_array << val # append the value at the end
+         break
+       end
+       i+=1
+     end
+   end
 
-    # 2. Conquer
-    array = []
-    offset_a = 0
-    offset_b = 0
-
-    while offset_a < left.count && offset_b < right.count
-        a = left[offset_a]
-        b = right[offset_b]
-
-        # Take the smallest of the two, and push it on our array
-        if a <= b
-            array << a
-            offset_a += 1
-        else
-            array << b
-            offset_b += 1
-        end
-    end
-
-    # There is at least one element left in either part_a or part_b (not both)
-    while offset_a < part_a.count
-        array << left[offset_a]
-        offset_a += 1
-    end
-
-    while offset_b < part_b.count
-        array << right[offset_b]
-        offset_b += 1
-    end
-
-    return array 
+   # Return the sorted array
+   sorted_array
  end
+
+puts "#{poorly_written_ruby([13,2,4,1,9, 12], [3,14,7,10], [11,8,6,15,5])}"
